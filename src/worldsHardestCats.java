@@ -16,22 +16,25 @@ import java.io.IOException;
 //Main game class
 public class worldsHardestCats extends JFrame implements KeyListener {
 
-    //All variables initialized, some static set
-    private static final int WIDTH = 640;
-    private static final int HEIGHT = 480;
-    private static final int PLAYER_SPEED = 5;
-    private static final int PLAYER_WIDTH = 50;
-    private static final int PLAYER_HEIGHT = 50;
+    //All static variables initialized
+    private static final int WIDTH = 640; //Width of game frame
+    private static final int HEIGHT = 480; //Height of game frame
+    private static final int PLAYER_SPEED = 5; //Player speed
+    private static final int PLAYER_WIDTH = 25; //Player width
+    private static final int PLAYER_HEIGHT = 25; //Player height
 
+    //Player boolean to update if player is inputting
     private boolean upPressed = false;
     private boolean downPressed = false;
     private boolean leftPressed = false;
     private boolean rightPressed = false;
-    private int playerX, playerY;
+
+    private int playerX, playerY; //Player coords
+
     private JPanel gamePanel;
     private JLabel scoreLabel;
     private Timer timer;
-    private boolean isGameOver;
+    private boolean isGameOver; //true/false for if the game is over
 
 
     //Constructor method for game
