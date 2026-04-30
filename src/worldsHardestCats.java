@@ -134,12 +134,12 @@ public class worldsHardestCats extends JFrame implements KeyListener {
     private void update(){
         if (!isGameOver){
                 // Horizontal movement
-                if (leftPressed && playerX > 0) {playerX -= PLAYER_SPEED;}
-                if (rightPressed && playerX < WIDTH - PLAYER_WIDTH) {playerX += PLAYER_SPEED;}
+                if (leftPressed && playerX > 0) playerX -= PLAYER_SPEED;
+                if (rightPressed && playerX < WIDTH - PLAYER_WIDTH) playerX += PLAYER_SPEED;
 
                 // Vertical movement
-                if (upPressed && playerY > 0) {playerY -= PLAYER_SPEED;}
-                if (downPressed && playerY < HEIGHT - PLAYER_HEIGHT) {playerY += PLAYER_SPEED;}
+                if (upPressed && playerY > 0) playerY -= PLAYER_SPEED;
+                if (downPressed && playerY < HEIGHT - PLAYER_HEIGHT) playerY += PLAYER_SPEED;
 
 
 
