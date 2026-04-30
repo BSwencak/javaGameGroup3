@@ -23,6 +23,10 @@ public class worldsHardestCats extends JFrame implements KeyListener {
     private static final int PLAYER_WIDTH = 50;
     private static final int PLAYER_HEIGHT = 50;
 
+    private boolean upPressed = false;
+    private boolean downPressed = false;
+    private boolean leftPressed = false;
+    private boolean rightPressed = false;
     private int playerX, playerY;
     private JPanel gamePanel;
     private JLabel scoreLabel;
@@ -34,7 +38,7 @@ public class worldsHardestCats extends JFrame implements KeyListener {
     public  worldsHardestCats() {
 
         /**
-        //Importing the digital assets for ship, astroids, healing, and laser audio
+        //Importing the digital assets
         try {
             shipImage = ImageIO.read(new File("ship.png"));
             spriteSheet = ImageIO.read(new File ("astro.png"));
@@ -126,20 +130,27 @@ public class worldsHardestCats extends JFrame implements KeyListener {
 
     private void update(){
         if (!isGameOver){
+                //Horizontal movement
+                if (leftPressed && playerX > 0) {playerX -= PLAYER_SPEED;}
+                if (rightPressed && playerX < WIDTH - PLAYER_WIDTH) {playerX += PLAYER_SPEED;}
+
+                //Vertical movement
+                if (upPressed && playerY > 0) {playerY -= PLAYER_SPEED;}
+                if (downPressed && playerY < HEIGHT - PLAYER_HEIGHT) {playerY += PLAYER_SPEED;}
 
 
 
-            /**
-            // Check collision with player
-            Rectangle playerRect = new Rectangle(playerX, playerY, PLAYER_WIDTH, PLAYER_HEIGHT);
-            for (Point obstacle : obstacles) {
-                Rectangle obstacleRect = new Rectangle(obstacle.x, obstacle.y, OBSTACLE_WIDTH, OBSTACLE_HEIGHT);
-                if (playerRect.intersects(obstacleRect)) {
-                    isGameOver = true;
-                    break;
-                }
-            }
-             */
+                    /**
+                    // Check collision with player
+                    Rectangle playerRect = new Rectangle(playerX, playerY, PLAYER_WIDTH, PLAYER_HEIGHT);
+                    for (Point obstacle : obstacles) {
+                        Rectangle obstacleRect = new Rectangle(obstacle.x, obstacle.y, OBSTACLE_WIDTH, OBSTACLE_HEIGHT);
+                        if (playerRect.intersects(obstacleRect)) {
+                            isGameOver = true;
+                            break;
+                        }
+                    }
+                     */
 
         }
     }
@@ -155,22 +166,21 @@ public class worldsHardestCats extends JFrame implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();
-        if (keyCode == KeyEvent.VK_LEFT && playerX > 0) {
-            playerX -= PLAYER_SPEED;
-        } else if (keyCode == KeyEvent.VK_RIGHT && playerX < WIDTH - PLAYER_WIDTH) {
-            playerX += PLAYER_SPEED;
-        }else if (keyCode == KeyEvent.VK_UP && playerY > 0) {
-            playerY -= PLAYER_SPEED;
-        }else if (keyCode == KeyEvent.VK_DOWN && playerY < HEIGHT - PLAYER_HEIGHT) {
-            playerY += PLAYER_SPEED;
-        }else if (keyCode == KeyEvent.VK_ESCAPE) {
-            reset();
-        }
+        if (keyCode == KeyEvent.VK_LEFT)  leftPressed = true;
+        if (keyCode == KeyEvent.VK_RIGHT) rightPressed = true;
+        if (keyCode == KeyEvent.VK_UP)    upPressed = true;
+        if (keyCode == KeyEvent.VK_DOWN)  downPressed = true;
+
+        if (keyCode == KeyEvent.VK_ESCAPE) reset();
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-
+        int keyCode = e.getKeyCode();
+        if (keyCode == KeyEvent.VK_LEFT)  leftPressed = false;
+        if (keyCode == KeyEvent.VK_RIGHT) rightPressed = false;
+        if (keyCode == KeyEvent.VK_UP)    upPressed = false;
+        if (keyCode == KeyEvent.VK_DOWN)  downPressed = false;
     }
 
 
