@@ -76,11 +76,13 @@ public class worldsHardestCats extends JFrame implements KeyListener {
         };
 
         // Sets scoreLabel to be displayed
-        scoreLabel = new JLabel("Placeholder Text");
+        scoreLabel = new JLabel("Worlds Hardest Cats");
         scoreLabel.setForeground(Color.BLACK);
         scoreLabel.setFont(new Font("Arial", Font.BOLD, 25));
         scoreLabel.setBounds(10, 10, 100, 20);
         gamePanel.add(scoreLabel);
+
+        // Creates and sets up gamePanel
         add(gamePanel);
         gamePanel.setFocusable(true);
         gamePanel.addKeyListener(this);
