@@ -1,4 +1,4 @@
-//Imported Classes Needed
+// Imported Classes Needed
 import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -13,31 +13,31 @@ import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.IOException;
 
-//Main game class
+// Main game class
 public class worldsHardestCats extends JFrame implements KeyListener {
 
-    //All static variables initialized
-    private static final int WIDTH = 640; //Width of game frame
-    private static final int HEIGHT = 480; //Height of game frame
-    private static final int PLAYER_SPEED = 5; //Player speed
-    private static final int PLAYER_WIDTH = 25; //Player width
-    private static final int PLAYER_HEIGHT = 25; //Player height
+    // All static variables initialized
+    private static final int WIDTH = 640; // Width of game frame
+    private static final int HEIGHT = 480; // Height of game frame
+    private static final int PLAYER_SPEED = 2; // Player speed
+    private static final int PLAYER_WIDTH = 25; // Player width
+    private static final int PLAYER_HEIGHT = 25; // Player height
 
-    //Player boolean to update if player is inputting
+    // Player boolean to update if player is inputting
     private boolean upPressed = false;
     private boolean downPressed = false;
     private boolean leftPressed = false;
     private boolean rightPressed = false;
 
-    private int playerX, playerY; //Player coords
+    private int playerX, playerY; // Player coords
 
     private JPanel gamePanel;
     private JLabel scoreLabel;
     private Timer timer;
-    private boolean isGameOver; //true/false for if the game is over
+    private boolean isGameOver; // true/false for if the game is over
 
 
-    //Constructor method for game
+    // Constructor method for game
     public  worldsHardestCats() {
 
         /**
@@ -59,14 +59,14 @@ public class worldsHardestCats extends JFrame implements KeyListener {
         */
 
 
-        //Sets title and JFrame options
+        // Sets title and JFrame options
         setTitle("Worlds Hardest Cats");
         setSize(WIDTH, HEIGHT);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
 
 
-        //Creates the gamePanel and draws
+        // Creates the gamePanel and draws
         gamePanel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -75,7 +75,7 @@ public class worldsHardestCats extends JFrame implements KeyListener {
             }
         };
 
-        //Sets scoreLabel to be displayed
+        // Sets scoreLabel to be displayed
         scoreLabel = new JLabel("Placeholder Text");
         scoreLabel.setForeground(Color.BLACK);
         scoreLabel.setFont(new Font("Arial", Font.BOLD, 25));
@@ -87,13 +87,13 @@ public class worldsHardestCats extends JFrame implements KeyListener {
 
 
 
-        //Sets variable data
+        // Sets variable data
         playerX = WIDTH / 2 - PLAYER_WIDTH / 2;
         playerY = HEIGHT - PLAYER_HEIGHT - 20;
         isGameOver = false;
 
 
-        //Creates game timer to call update so the came updates its logic
+        // Creates game timer to call update so the came updates its logic
         timer = new Timer(20, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -106,23 +106,23 @@ public class worldsHardestCats extends JFrame implements KeyListener {
         timer.start();
     }
 
-    //Function for resetting game
+    // Function for resetting game
     private void reset(){
         isGameOver = false;
         repaint();
     }
 
     private void draw(Graphics g){
-        //Sets background
+        // Sets background
         g.setColor(new Color(28, 161, 218));
         g.fillRect(0, 0, WIDTH, HEIGHT);
 
-        //Sets player color
+        // Sets player color
         g.setColor(new Color(151, 2, 23, 255));
         g.fillRect(playerX, playerY, PLAYER_WIDTH, PLAYER_HEIGHT);
 
 
-        //Displays game over screen if player loses
+        // Displays game over screen if player loses
         if (isGameOver) {
             g.setColor(Color.WHITE);
             g.setFont(new Font("Arial", Font.BOLD, 24));
@@ -133,11 +133,11 @@ public class worldsHardestCats extends JFrame implements KeyListener {
 
     private void update(){
         if (!isGameOver){
-                //Horizontal movement
+                // Horizontal movement
                 if (leftPressed && playerX > 0) {playerX -= PLAYER_SPEED;}
                 if (rightPressed && playerX < WIDTH - PLAYER_WIDTH) {playerX += PLAYER_SPEED;}
 
-                //Vertical movement
+                // Vertical movement
                 if (upPressed && playerY > 0) {playerY -= PLAYER_SPEED;}
                 if (downPressed && playerY < HEIGHT - PLAYER_HEIGHT) {playerY += PLAYER_SPEED;}
 
