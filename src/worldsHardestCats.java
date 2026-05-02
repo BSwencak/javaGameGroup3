@@ -90,10 +90,6 @@ public class worldsHardestCats extends JFrame implements KeyListener {
         playerY = 150;
         victory = false;
 
-        // adds wall rectangles to list "walls"
-        walls.add(new Rectangle(200, 200, 50, 100));
-        walls.add(new Rectangle(400, 50, 100, 50));
-
 
         // Creates game timer to call update so the came updates its logic
         timer = new Timer(20, new ActionListener() {
@@ -117,6 +113,7 @@ public class worldsHardestCats extends JFrame implements KeyListener {
 
         victory = false;
         level = 1; // Resets all levels
+        walls.clear();
         repaint();
     }
 
@@ -127,6 +124,7 @@ public class worldsHardestCats extends JFrame implements KeyListener {
         playerY = 150;
 
         victory = false;
+        walls.clear();
         repaint();
     }
 
@@ -146,9 +144,6 @@ public class worldsHardestCats extends JFrame implements KeyListener {
         }
 
 
-        g.setColor(Color.BLACK);
-        for (Rectangle wall : walls) g.fillRect(wall.x, wall.y, wall.width, wall.height);
-
         // Sets victory location
         g.setColor(new Color(70, 200, 96, 255));
         g.fillRect(500, 250, 75, 75);
@@ -156,6 +151,10 @@ public class worldsHardestCats extends JFrame implements KeyListener {
         // Sets starting location
         g.setColor(new Color(111, 70, 200, 255));
         g.fillRect(100 + PLAYER_WIDTH / 2 - 75 / 2, 150 + PLAYER_HEIGHT / 2 - 75 / 2, 75, 75);
+
+        // Displays walls
+        g.setColor(Color.BLACK);
+        for (Rectangle wall : walls) g.fillRect(wall.x, wall.y, wall.width, wall.height);
 
         // Sets player color
         g.setColor(new Color(151, 2, 23, 255));
@@ -185,13 +184,52 @@ public class worldsHardestCats extends JFrame implements KeyListener {
                 if (upPressed) movementY -= PLAYER_SPEED;
                 if (downPressed) movementY += PLAYER_SPEED;
                 Rectangle nextY = new Rectangle(playerX, movementY, PLAYER_WIDTH, PLAYER_HEIGHT);
-                if (!wallCollision(nextY) && movementY >= 0 && movementX <= HEIGHT - PLAYER_HEIGHT) playerY = movementY;
+                if (!wallCollision(nextY) && movementY >= 0 && movementY <= HEIGHT - PLAYER_HEIGHT) playerY = movementY;
+
+
+                // adds wall rectangles to list "walls"
+                if (level == 1){
+                    // Start box
+                    walls.add(new Rectangle(75, 125, 75, 5)); // top
+                    walls.add(new Rectangle(75, 125, 5, 75)); // left
+                    walls.add(new Rectangle(145, 125, 5, 75)); // right
+
+                    // Finish box
+                    walls.add(new Rectangle(500, 250, 75, 5)); // top
+                    walls.add(new Rectangle(500, 320, 75, 5)); // bottom
+                    walls.add(new Rectangle(570, 250, 5, 75)); // right
+                } else if (level == 2){
+                    // Start box
+                    walls.add(new Rectangle(75, 125, 75, 5)); // top
+                    walls.add(new Rectangle(75, 195, 75, 5)); // bottom
+                    walls.add(new Rectangle(75, 125, 5, 75)); // left
+
+
+                    // Finish box
+                    walls.add(new Rectangle(500, 320, 75, 5)); // bottom
+                    walls.add(new Rectangle(500, 250, 5, 75)); // left
+                    walls.add(new Rectangle(570, 250, 5, 75)); // right
+                } else if (level >= 3){
+                    // Start box
+                    walls.add(new Rectangle(75, 125, 75, 5)); // top
+                    walls.add(new Rectangle(75, 125, 5, 75)); // left
+                    walls.add(new Rectangle(75, 195, 75, 5)); // bottom
+
+                    // Finish box
+                    walls.add(new Rectangle(500, 250, 75, 5)); // top
+                    walls.add(new Rectangle(500, 320, 75, 5)); // bottom
+                    walls.add(new Rectangle(570, 250, 5, 75)); // right
+                }
+
+
+
 
                 // Checks if player is in victory space
                 Rectangle playerRect = new Rectangle(playerX, playerY, PLAYER_WIDTH, PLAYER_HEIGHT);
                 Rectangle victoryRect = new Rectangle(500, 250, 75, 75);
                 if (victoryRect.contains(playerRect) || cheatPressed){
                     level++; // increments level
+
 
                     cheatPressed = false;
 
@@ -201,6 +239,7 @@ public class worldsHardestCats extends JFrame implements KeyListener {
                     } else {
                         playerX = 100; // resets player position
                         playerY = 150;
+                        walls.clear();
                     }
                 }
         }
