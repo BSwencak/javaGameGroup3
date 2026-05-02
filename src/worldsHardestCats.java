@@ -171,10 +171,10 @@ public class worldsHardestCats extends JFrame implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();
-        if (keyCode == KeyEvent.VK_LEFT)  leftPressed = true;
-        if (keyCode == KeyEvent.VK_RIGHT) rightPressed = true;
-        if (keyCode == KeyEvent.VK_UP)    upPressed = true;
-        if (keyCode == KeyEvent.VK_DOWN)  downPressed = true;
+        if (keyCode == KeyEvent.VK_LEFT || keyCode == KeyEvent.VK_A)  leftPressed = true;
+        if (keyCode == KeyEvent.VK_RIGHT || keyCode == KeyEvent.VK_D) rightPressed = true;
+        if (keyCode == KeyEvent.VK_UP || keyCode == KeyEvent.VK_W)    upPressed = true;
+        if (keyCode == KeyEvent.VK_DOWN || keyCode == KeyEvent.VK_S)  downPressed = true;
 
         if (keyCode == KeyEvent.VK_ESCAPE) reset();
     }
@@ -182,10 +182,10 @@ public class worldsHardestCats extends JFrame implements KeyListener {
     @Override
     public void keyReleased(KeyEvent e) {
         int keyCode = e.getKeyCode();
-        if (keyCode == KeyEvent.VK_LEFT)  leftPressed = false;
-        if (keyCode == KeyEvent.VK_RIGHT) rightPressed = false;
-        if (keyCode == KeyEvent.VK_UP)    upPressed = false;
-        if (keyCode == KeyEvent.VK_DOWN)  downPressed = false;
+        if (keyCode == KeyEvent.VK_LEFT || keyCode == KeyEvent.VK_A)  leftPressed = false;
+        if (keyCode == KeyEvent.VK_RIGHT || keyCode == KeyEvent.VK_D) rightPressed = false;
+        if (keyCode == KeyEvent.VK_UP || keyCode == KeyEvent.VK_W)    upPressed = false;
+        if (keyCode == KeyEvent.VK_DOWN || keyCode == KeyEvent.VK_S)  downPressed = false;
     }
 
 
