@@ -140,6 +140,10 @@ public class worldsHardestCats extends JFrame implements KeyListener {
         g.setColor(new Color(70, 200, 96, 255));
         g.fillRect(500, 250, 50, 50);
 
+        // Sets starting location
+        g.setColor(new Color(111, 70, 200, 255));
+        g.fillRect(100 + PLAYER_WIDTH / 2 - 75 / 2, 150 + PLAYER_HEIGHT / 2 - 75 / 2, 75, 75);
+
         // Sets player color
         g.setColor(new Color(151, 2, 23, 255));
         g.fillRect(playerX, playerY, PLAYER_WIDTH, PLAYER_HEIGHT);
