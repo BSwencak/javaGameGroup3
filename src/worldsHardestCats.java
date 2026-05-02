@@ -34,7 +34,8 @@ public class worldsHardestCats extends JFrame implements KeyListener {
     private JPanel gamePanel;
     private JLabel scoreLabel;
     private Timer timer;
-    private boolean isGameOver; // true/false for if the game is over
+    private int level = 1; // int for player level
+    private boolean victory; // true/false for if final victory
 
 
     // Constructor method for game
@@ -90,16 +91,16 @@ public class worldsHardestCats extends JFrame implements KeyListener {
 
 
         // Sets variable data
-        playerX = WIDTH / 2 - PLAYER_WIDTH / 2;
-        playerY = HEIGHT - PLAYER_HEIGHT - 20;
-        isGameOver = false;
+        playerX = 100;
+        playerY = 150;
+        victory = false;
 
 
         // Creates game timer to call update so the came updates its logic
         timer = new Timer(20, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (!isGameOver) {
+                if (!victory) {
                     update();
                     gamePanel.repaint();
                 }
@@ -108,9 +109,25 @@ public class worldsHardestCats extends JFrame implements KeyListener {
         timer.start();
     }
 
-    // Function for resetting game
-    private void reset(){
-        isGameOver = false;
+
+    // Function for resetting whole game
+    private void resetGame(){
+        // Resets player location
+        playerX = 100;
+        playerY = 150;
+
+        victory = false;
+        level = 1; // Resets all levels
+        repaint();
+    }
+
+
+    // Function for resetting level
+    private void resetLevel(){
+        playerX = 100;
+        playerY = 150;
+
+        victory = false;
         repaint();
     }
 
@@ -125,16 +142,16 @@ public class worldsHardestCats extends JFrame implements KeyListener {
 
 
         // Displays game over screen if player loses
-        if (isGameOver) {
+        if (victory) {
             g.setColor(Color.WHITE);
             g.setFont(new Font("Arial", Font.BOLD, 24));
-            g.drawString("Game Over!", WIDTH / 2 - 80, HEIGHT / 2);
+            g.drawString("VICTORY!", WIDTH / 2 - 80, HEIGHT / 2);
         }
 
     }
 
     private void update(){
-        if (!isGameOver){
+        if (!victory){
                 // Horizontal movement
                 if (leftPressed && playerX > 0) playerX -= PLAYER_SPEED;
                 if (rightPressed && playerX < WIDTH - PLAYER_WIDTH) playerX += PLAYER_SPEED;
@@ -176,7 +193,8 @@ public class worldsHardestCats extends JFrame implements KeyListener {
         if (keyCode == KeyEvent.VK_UP || keyCode == KeyEvent.VK_W)    upPressed = true;
         if (keyCode == KeyEvent.VK_DOWN || keyCode == KeyEvent.VK_S)  downPressed = true;
 
-        if (keyCode == KeyEvent.VK_ESCAPE) reset();
+        if (keyCode == KeyEvent.VK_ESCAPE) resetLevel();
+        if (keyCode == KeyEvent.VK_BACK_SPACE) resetGame();
     }
 
     @Override
