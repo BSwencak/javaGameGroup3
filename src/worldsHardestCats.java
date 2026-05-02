@@ -12,6 +12,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 // Main game class
 public class worldsHardestCats extends JFrame implements KeyListener {
@@ -28,14 +29,16 @@ public class worldsHardestCats extends JFrame implements KeyListener {
     private boolean downPressed = false;
     private boolean leftPressed = false;
     private boolean rightPressed = false;
+    private boolean cheatPressed = false;
 
     private int playerX, playerY; // Player coords
 
     private JPanel gamePanel;
-    private JLabel scoreLabel;
     private Timer timer;
     private int level = 1; // int for player level
     private boolean victory; // true/false for if final victory
+    private ArrayList<Rectangle> walls = new ArrayList<>(); // list for rectangle walls
+    private boolean wallCollision; // boolean to check if player colliding with a wall
 
 
     // Constructor method for game
@@ -76,12 +79,6 @@ public class worldsHardestCats extends JFrame implements KeyListener {
             }
         };
 
-        // Sets scoreLabel to be displayed
-        scoreLabel = new JLabel("Worlds Hardest Cats");
-        scoreLabel.setForeground(Color.BLACK);
-        scoreLabel.setFont(new Font("Arial", Font.BOLD, 25));
-        scoreLabel.setBounds(10, 10, 100, 20);
-        gamePanel.add(scoreLabel);
 
         // Creates and sets up gamePanel
         add(gamePanel);
@@ -94,6 +91,10 @@ public class worldsHardestCats extends JFrame implements KeyListener {
         playerX = 100;
         playerY = 150;
         victory = false;
+
+        // adds wall rectangles to list "walls"
+        walls.add(new Rectangle(200, 200, 50, 100));
+        walls.add(new Rectangle(400, 50, 100, 50));
 
 
         // Creates game timer to call update so the came updates its logic
@@ -136,6 +137,20 @@ public class worldsHardestCats extends JFrame implements KeyListener {
         g.setColor(new Color(28, 161, 218));
         g.fillRect(0, 0, WIDTH, HEIGHT);
 
+        // Displays level
+        g.setColor(Color.BLACK);
+        g.setFont(new Font("Arial", Font.BOLD, 30));
+        if (level <= 3){
+            g.drawString("Level: " + level, 15, 40);
+        }
+        else {
+            g.drawString("Level: 3", 15, 40);
+        }
+
+
+        g.setColor(Color.BLACK);
+        for (Rectangle wall : walls) g.fillRect(wall.x, wall.y, wall.width, wall.height);
+
         // Sets victory location
         g.setColor(new Color(70, 200, 96, 255));
         g.fillRect(500, 250, 50, 50);
@@ -161,12 +176,18 @@ public class worldsHardestCats extends JFrame implements KeyListener {
     private void update(){
         if (!victory){
                 // Horizontal movement
-                if (leftPressed && playerX > 0) playerX -= PLAYER_SPEED;
-                if (rightPressed && playerX < WIDTH - PLAYER_WIDTH) playerX += PLAYER_SPEED;
+                int movementX = playerX;
+                if (leftPressed) movementX -= PLAYER_SPEED;
+                if (rightPressed) movementX += PLAYER_SPEED;
+                Rectangle nextX = new Rectangle(movementX, playerY, PLAYER_WIDTH, PLAYER_HEIGHT);
+                if (!wallCollision(nextX) && movementX >= 0 && movementX <= WIDTH - PLAYER_WIDTH) playerX = movementX;
 
                 // Vertical movement
-                if (upPressed && playerY > 0) playerY -= PLAYER_SPEED;
-                if (downPressed && playerY < HEIGHT - PLAYER_HEIGHT) playerY += PLAYER_SPEED;
+                int movementY = playerY;
+                if (upPressed) movementY -= PLAYER_SPEED;
+                if (downPressed) movementY += PLAYER_SPEED;
+                Rectangle nextY = new Rectangle(playerX, movementY, PLAYER_WIDTH, PLAYER_HEIGHT);
+                if (!wallCollision(nextY) && movementY >= 0 && movementX <= HEIGHT - PLAYER_HEIGHT) playerY = movementY;
 
                 // Checks if player is in victory space
                 Rectangle playerRect = new Rectangle(playerX, playerY, PLAYER_WIDTH, PLAYER_HEIGHT);
@@ -186,6 +207,15 @@ public class worldsHardestCats extends JFrame implements KeyListener {
     }
 
 
+    // function to check if wall collision returns true or false.
+    private boolean wallCollision(Rectangle rect) {
+        for (Rectangle wall : walls) {
+            if (rect.intersects(wall)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 
     @Override
@@ -203,6 +233,8 @@ public class worldsHardestCats extends JFrame implements KeyListener {
 
         if (keyCode == KeyEvent.VK_ESCAPE) resetLevel();
         if (keyCode == KeyEvent.VK_BACK_SPACE) resetGame();
+
+        if (keyCode == KeyEvent.VK_ALT && !cheatPressed) level++;
     }
 
     @Override
