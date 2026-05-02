@@ -136,6 +136,10 @@ public class worldsHardestCats extends JFrame implements KeyListener {
         g.setColor(new Color(28, 161, 218));
         g.fillRect(0, 0, WIDTH, HEIGHT);
 
+        // Sets victory location
+        g.setColor(new Color(70, 200, 96, 255));
+        g.fillRect(500, 250, 50, 50);
+
         // Sets player color
         g.setColor(new Color(151, 2, 23, 255));
         g.fillRect(playerX, playerY, PLAYER_WIDTH, PLAYER_HEIGHT);
@@ -160,20 +164,20 @@ public class worldsHardestCats extends JFrame implements KeyListener {
                 if (upPressed && playerY > 0) playerY -= PLAYER_SPEED;
                 if (downPressed && playerY < HEIGHT - PLAYER_HEIGHT) playerY += PLAYER_SPEED;
 
+                // Checks if player is in victory space
+                Rectangle playerRect = new Rectangle(playerX, playerY, PLAYER_WIDTH, PLAYER_HEIGHT);
+                Rectangle victoryRect = new Rectangle(500, 250, 50, 50);
+                if (victoryRect.contains(playerRect)){
+                    level++; // increments level
 
+                    playerX=100; // resets player position
+                    playerY=150;
+                }
 
-                    /**
-                    // Check collision with player
-                    Rectangle playerRect = new Rectangle(playerX, playerY, PLAYER_WIDTH, PLAYER_HEIGHT);
-                    for (Point obstacle : obstacles) {
-                        Rectangle obstacleRect = new Rectangle(obstacle.x, obstacle.y, OBSTACLE_WIDTH, OBSTACLE_HEIGHT);
-                        if (playerRect.intersects(obstacleRect)) {
-                            isGameOver = true;
-                            break;
-                        }
-                    }
-                     */
-
+                // victory if player beats level 3
+                if (level == 4){
+                    victory = true;
+                }
         }
     }
 
