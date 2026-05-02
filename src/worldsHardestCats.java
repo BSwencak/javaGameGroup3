@@ -38,8 +38,6 @@ public class worldsHardestCats extends JFrame implements KeyListener {
     private int level = 1; // int for player level
     private boolean victory; // true/false for if final victory
     private ArrayList<Rectangle> walls = new ArrayList<>(); // list for rectangle walls
-    private boolean wallCollision; // boolean to check if player colliding with a wall
-
 
     // Constructor method for game
     public  worldsHardestCats() {
@@ -153,7 +151,7 @@ public class worldsHardestCats extends JFrame implements KeyListener {
 
         // Sets victory location
         g.setColor(new Color(70, 200, 96, 255));
-        g.fillRect(500, 250, 50, 50);
+        g.fillRect(500, 250, 75, 75);
 
         // Sets starting location
         g.setColor(new Color(111, 70, 200, 255));
@@ -191,17 +189,19 @@ public class worldsHardestCats extends JFrame implements KeyListener {
 
                 // Checks if player is in victory space
                 Rectangle playerRect = new Rectangle(playerX, playerY, PLAYER_WIDTH, PLAYER_HEIGHT);
-                Rectangle victoryRect = new Rectangle(500, 250, 50, 50);
-                if (victoryRect.contains(playerRect)){
+                Rectangle victoryRect = new Rectangle(500, 250, 75, 75);
+                if (victoryRect.contains(playerRect) || cheatPressed){
                     level++; // increments level
 
-                    playerX=100; // resets player position
-                    playerY=150;
-                }
+                    cheatPressed = false;
 
-                // victory if player beats level 3
-                if (level == 4){
-                    victory = true;
+                    // victory if player beats level 3
+                    if (level == 4) {
+                        victory = true;
+                    } else {
+                        playerX = 100; // resets player position
+                        playerY = 150;
+                    }
                 }
         }
     }
@@ -234,7 +234,7 @@ public class worldsHardestCats extends JFrame implements KeyListener {
         if (keyCode == KeyEvent.VK_ESCAPE) resetLevel();
         if (keyCode == KeyEvent.VK_BACK_SPACE) resetGame();
 
-        if (keyCode == KeyEvent.VK_ALT && !cheatPressed) level++;
+        if (keyCode == KeyEvent.VK_ALT && !cheatPressed) cheatPressed = true;
     }
 
     @Override
@@ -244,6 +244,9 @@ public class worldsHardestCats extends JFrame implements KeyListener {
         if (keyCode == KeyEvent.VK_RIGHT || keyCode == KeyEvent.VK_D) rightPressed = false;
         if (keyCode == KeyEvent.VK_UP || keyCode == KeyEvent.VK_W)    upPressed = false;
         if (keyCode == KeyEvent.VK_DOWN || keyCode == KeyEvent.VK_S)  downPressed = false;
+
+        if (keyCode == KeyEvent.VK_ALT) cheatPressed = false;
+
     }
 
 
