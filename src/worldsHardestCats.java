@@ -38,6 +38,7 @@ public class worldsHardestCats extends JFrame implements KeyListener {
     private int level = 1; // int for player level
     private boolean victory; // true/false for if final victory
     private ArrayList<Rectangle> walls = new ArrayList<>(); // list for rectangle walls
+    private ArrayList<Rectangle> enemies = new ArrayList<>(); // list for rectangle enemies
 
     // Constructor method for game
     public  worldsHardestCats() {
@@ -82,7 +83,6 @@ public class worldsHardestCats extends JFrame implements KeyListener {
         add(gamePanel);
         gamePanel.setFocusable(true);
         gamePanel.addKeyListener(this);
-
 
 
         // Sets variable data
@@ -204,7 +204,6 @@ public class worldsHardestCats extends JFrame implements KeyListener {
                     walls.add(new Rectangle(75, 195, 75, 5)); // bottom
                     walls.add(new Rectangle(75, 125, 5, 75)); // left
 
-
                     // Finish box
                     walls.add(new Rectangle(500, 320, 75, 5)); // bottom
                     walls.add(new Rectangle(500, 250, 5, 75)); // left
@@ -220,8 +219,6 @@ public class worldsHardestCats extends JFrame implements KeyListener {
                     walls.add(new Rectangle(500, 320, 75, 5)); // bottom
                     walls.add(new Rectangle(570, 250, 5, 75)); // right
                 }
-
-
 
 
                 // Checks if player is in victory space
@@ -285,7 +282,6 @@ public class worldsHardestCats extends JFrame implements KeyListener {
         if (keyCode == KeyEvent.VK_DOWN || keyCode == KeyEvent.VK_S)  downPressed = false;
 
         if (keyCode == KeyEvent.VK_ALT) cheatPressed = false;
-
     }
 
 
