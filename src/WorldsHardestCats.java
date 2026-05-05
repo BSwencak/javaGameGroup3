@@ -201,7 +201,7 @@ public class WorldsHardestCats extends JFrame implements KeyListener {
                 if (!wallCollision(nextY) && movementY >= 0 && movementY <= HEIGHT - PLAYER_HEIGHT) playerY = movementY;
 
 
-                // adds wall rectangles to list "walls"
+                // runs loadLevel to add walls to level
                 if (level == 1 && walls.isEmpty()){
                     loadLevel();
                 } else if (level == 2 && walls.isEmpty()){
@@ -249,6 +249,20 @@ public class WorldsHardestCats extends JFrame implements KeyListener {
             walls.add(new Rectangle(500, 320, 75, 5)); // bottom
             walls.add(new Rectangle(570, 250, 5, 75)); // right
 
+            // Level 1 Corridor Walls
+            // Top Section
+            walls.add(new Rectangle(145, 195, 5, 100)); // drop down from right start
+            walls.add(new Rectangle(145, 295, 60, 5)); // small right from drop
+            walls.add(new Rectangle(205, 175, 5, 125)); // up from small right
+            walls.add(new Rectangle(205, 175, 240, 5)); // main top
+            walls.add(new Rectangle(445, 175, 5, 80)); // down from top
+            walls.add(new Rectangle(445, 250, 55, 5)); // over to finish
+
+            // Bottom Section
+            walls.add(new Rectangle(75, 195, 5, 225)); // drop down from left start
+            walls.add(new Rectangle(75, 420, 360, 5)); // bottom
+            walls.add(new Rectangle(435, 325, 5, 100)); // bottom up right
+            walls.add(new Rectangle(435, 320, 65, 5)); // finish box bottom connection
 
         } else if (level == 2){
             // Start box
