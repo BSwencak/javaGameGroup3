@@ -190,14 +190,14 @@ public class WorldsHardestCats extends JFrame implements KeyListener {
                 int movementX = playerX;
                 if (leftPressed) movementX -= PLAYER_SPEED;
                 if (rightPressed) movementX += PLAYER_SPEED;
-                Rectangle nextX = new Rectangle(movementX, playerY, PLAYER_WIDTH, PLAYER_HEIGHT);
+                Rectangle nextX = new Rectangle(movementX + 6, playerY + 6,PLAYER_WIDTH - 13, PLAYER_HEIGHT - 14);
                 if (!wallCollision(nextX) && movementX >= 0 && movementX <= WIDTH - PLAYER_WIDTH) playerX = movementX;
 
                 // Vertical movement
                 int movementY = playerY;
                 if (upPressed) movementY -= PLAYER_SPEED;
                 if (downPressed) movementY += PLAYER_SPEED;
-                Rectangle nextY = new Rectangle(playerX, movementY, PLAYER_WIDTH, PLAYER_HEIGHT);
+                Rectangle nextY = new Rectangle(playerX +6, movementY + 6, PLAYER_WIDTH- 13, PLAYER_HEIGHT - 14);
                 if (!wallCollision(nextY) && movementY >= 0 && movementY <= HEIGHT - PLAYER_HEIGHT) playerY = movementY;
 
 
