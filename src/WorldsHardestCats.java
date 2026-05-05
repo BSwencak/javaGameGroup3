@@ -202,36 +202,12 @@ public class WorldsHardestCats extends JFrame implements KeyListener {
 
 
                 // adds wall rectangles to list "walls"
-                if (level == 1){
-                    // Start box
-                    walls.add(new Rectangle(75, 125, 75, 5)); // top
-                    walls.add(new Rectangle(75, 125, 5, 75)); // left
-                    walls.add(new Rectangle(145, 125, 5, 75)); // right
-
-                    // Finish box
-                    walls.add(new Rectangle(500, 250, 75, 5)); // top
-                    walls.add(new Rectangle(500, 320, 75, 5)); // bottom
-                    walls.add(new Rectangle(570, 250, 5, 75)); // right
-                } else if (level == 2){
-                    // Start box
-                    walls.add(new Rectangle(75, 125, 75, 5)); // top
-                    walls.add(new Rectangle(75, 195, 75, 5)); // bottom
-                    walls.add(new Rectangle(75, 125, 5, 75)); // left
-
-                    // Finish box
-                    walls.add(new Rectangle(500, 320, 75, 5)); // bottom
-                    walls.add(new Rectangle(500, 250, 5, 75)); // left
-                    walls.add(new Rectangle(570, 250, 5, 75)); // right
-                } else if (level >= 3){
-                    // Start box
-                    walls.add(new Rectangle(75, 125, 75, 5)); // top
-                    walls.add(new Rectangle(75, 125, 5, 75)); // left
-                    walls.add(new Rectangle(75, 195, 75, 5)); // bottom
-
-                    // Finish box
-                    walls.add(new Rectangle(500, 250, 75, 5)); // top
-                    walls.add(new Rectangle(500, 320, 75, 5)); // bottom
-                    walls.add(new Rectangle(570, 250, 5, 75)); // right
+                if (level == 1 && walls.isEmpty()){
+                    loadLevel();
+                } else if (level == 2 && walls.isEmpty()){
+                    loadLevel();
+                } else if (level >= 3 && walls.isEmpty()){
+                    loadLevel();
                 }
 
 
@@ -254,6 +230,48 @@ public class WorldsHardestCats extends JFrame implements KeyListener {
                     }
                 }
         }
+    }
+
+
+
+
+    private void loadLevel(){
+        walls.clear();
+        // adds wall rectangles to list "walls"
+        if (level == 1){
+            // Start box
+            walls.add(new Rectangle(75, 125, 75, 5)); // top
+            walls.add(new Rectangle(75, 125, 5, 75)); // left
+            walls.add(new Rectangle(145, 125, 5, 75)); // right
+
+            // Finish box
+            walls.add(new Rectangle(500, 250, 75, 5)); // top
+            walls.add(new Rectangle(500, 320, 75, 5)); // bottom
+            walls.add(new Rectangle(570, 250, 5, 75)); // right
+
+
+        } else if (level == 2){
+            // Start box
+            walls.add(new Rectangle(75, 125, 75, 5)); // top
+            walls.add(new Rectangle(75, 195, 75, 5)); // bottom
+            walls.add(new Rectangle(75, 125, 5, 75)); // left
+
+            // Finish box
+            walls.add(new Rectangle(500, 320, 75, 5)); // bottom
+            walls.add(new Rectangle(500, 250, 5, 75)); // left
+            walls.add(new Rectangle(570, 250, 5, 75)); // right
+        } else if (level >= 3){
+            // Start box
+            walls.add(new Rectangle(75, 125, 75, 5)); // top
+            walls.add(new Rectangle(75, 125, 5, 75)); // left
+            walls.add(new Rectangle(75, 195, 75, 5)); // bottom
+
+            // Finish box
+            walls.add(new Rectangle(500, 250, 75, 5)); // top
+            walls.add(new Rectangle(500, 320, 75, 5)); // bottom
+            walls.add(new Rectangle(570, 250, 5, 75)); // right
+        }
+
     }
 
 
