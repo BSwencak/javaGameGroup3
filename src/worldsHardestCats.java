@@ -10,9 +10,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 // Main game class
 public class worldsHardestCats extends JFrame implements KeyListener {
@@ -40,26 +42,34 @@ public class worldsHardestCats extends JFrame implements KeyListener {
     private ArrayList<Rectangle> walls = new ArrayList<>(); // list for rectangle walls
     private ArrayList<Rectangle> enemies = new ArrayList<>(); // list for rectangle enemies
 
+    private BufferedImage dog1;
+    private BufferedImage dog2;
+    private BufferedImage dog3;
+    private BufferedImage dog4;
+    private BufferedImage alpha;
+    private BufferedImage yoda;
+    private BufferedImage explorer;
+
     // Constructor method for game
     public  worldsHardestCats() {
 
-        /**
+
         //Importing the digital assets
         try {
-            shipImage = ImageIO.read(new File("ship.png"));
-            spriteSheet = ImageIO.read(new File ("astro.png"));
-            lifeImage = ImageIO.read(new File("life.png"));
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("laser.wav").getAbsoluteFile());
-            clip = AudioSystem.getClip();
-            clip.open(audioInputStream);
+            dog1 = ImageIO.read(Objects.requireNonNull(getClass().getResource("/images/dog1.png")));
+            dog2 = ImageIO.read(Objects.requireNonNull(getClass().getResource("/images/dog2.png")));
+            dog3 = ImageIO.read(Objects.requireNonNull(getClass().getResource("/images/dog3.png")));
+            dog4 = ImageIO.read(Objects.requireNonNull(getClass().getResource("/images/toby.png")));
+            alpha = ImageIO.read(Objects.requireNonNull(getClass().getResource("/images/alpha.png")));
+            explorer = ImageIO.read(Objects.requireNonNull(getClass().getResource("/images/explorer.png")));
+            yoda = ImageIO.read(Objects.requireNonNull(getClass().getResource("/images/yoda.png")));
+
+            //AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("laser.wav").getAbsoluteFile());
+            //clip = AudioSystem.getClip();
+            //clip.open(audioInputStream);
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (UnsupportedAudioFileException e) {
-            e.printStackTrace();
-        } catch (LineUnavailableException e) {
-            e.printStackTrace();
         }
-        */
 
 
         // Sets title and JFrame options
