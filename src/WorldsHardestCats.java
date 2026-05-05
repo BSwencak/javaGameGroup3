@@ -1,28 +1,25 @@
 // Imported Classes Needed
 import javax.imageio.ImageIO;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.File;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 // Main game class
-public class worldsHardestCats extends JFrame implements KeyListener {
+public class WorldsHardestCats extends JFrame implements KeyListener {
 
     // All static variables initialized
     private static final int WIDTH = 640; // Width of game frame
     private static final int HEIGHT = 480; // Height of game frame
     private static final int PLAYER_SPEED = 2; // Player speed
-    private static final int PLAYER_WIDTH = 25; // Player width
-    private static final int PLAYER_HEIGHT = 25; // Player height
+    private static final int PLAYER_WIDTH = 32; // Player width
+    private static final int PLAYER_HEIGHT = 32; // Player height
 
     // Player boolean to update if player is inputting
     private boolean upPressed = false;
@@ -40,26 +37,36 @@ public class worldsHardestCats extends JFrame implements KeyListener {
     private ArrayList<Rectangle> walls = new ArrayList<>(); // list for rectangle walls
     private ArrayList<Rectangle> enemies = new ArrayList<>(); // list for rectangle enemies
 
-    // Constructor method for game
-    public  worldsHardestCats() {
+    private BufferedImage dog1;
+    private BufferedImage dog2;
+    private BufferedImage dog3;
+    private BufferedImage dog4;
+    private BufferedImage alpha;
+    private BufferedImage yoda;
+    private BufferedImage explorer;
 
-        /**
+    // Constructor method for game
+    public WorldsHardestCats() {
+
+
         //Importing the digital assets
         try {
-            shipImage = ImageIO.read(new File("ship.png"));
-            spriteSheet = ImageIO.read(new File ("astro.png"));
-            lifeImage = ImageIO.read(new File("life.png"));
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("laser.wav").getAbsoluteFile());
-            clip = AudioSystem.getClip();
-            clip.open(audioInputStream);
+
+            // Import Images
+            dog1 = ImageIO.read(Objects.requireNonNull(getClass().getResource("/images/dog1.png")));
+            dog2 = ImageIO.read(Objects.requireNonNull(getClass().getResource("/images/dog2.png")));
+            dog3 = ImageIO.read(Objects.requireNonNull(getClass().getResource("/images/dog3.png")));
+            dog4 = ImageIO.read(Objects.requireNonNull(getClass().getResource("/images/toby.png")));
+            alpha = ImageIO.read(Objects.requireNonNull(getClass().getResource("/images/alpha.png")));
+            explorer = ImageIO.read(Objects.requireNonNull(getClass().getResource("/images/explorer.png")));
+            yoda = ImageIO.read(Objects.requireNonNull(getClass().getResource("/images/yoda.png")));
+
+            //AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("laser.wav").getAbsoluteFile());
+            //clip = AudioSystem.getClip();
+            //clip.open(audioInputStream);
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (UnsupportedAudioFileException e) {
-            e.printStackTrace();
-        } catch (LineUnavailableException e) {
-            e.printStackTrace();
         }
-        */
 
 
         // Sets title and JFrame options
@@ -150,15 +157,22 @@ public class worldsHardestCats extends JFrame implements KeyListener {
 
         // Sets starting location
         g.setColor(new Color(111, 70, 200, 255));
-        g.fillRect(100 + PLAYER_WIDTH / 2 - 75 / 2, 150 + PLAYER_HEIGHT / 2 - 75 / 2, 75, 75);
+        g.fillRect(75, 125, 75, 75);
 
         // Displays walls
         g.setColor(Color.BLACK);
         for (Rectangle wall : walls) g.fillRect(wall.x, wall.y, wall.width, wall.height);
 
         // Sets player color
-        g.setColor(new Color(151, 2, 23, 255));
-        g.fillRect(playerX, playerY, PLAYER_WIDTH, PLAYER_HEIGHT);
+       // g.setColor(new Color(151, 2, 23, 255));
+        //g.fillRect(playerX, playerY, PLAYER_WIDTH, PLAYER_HEIGHT);
+        if (level == 1){
+            g.drawImage(alpha,playerX,playerY,PLAYER_WIDTH,PLAYER_HEIGHT,null);
+        }else if (level == 2){
+            g.drawImage(explorer,playerX,playerY,PLAYER_WIDTH,PLAYER_HEIGHT,null);
+        }else if (level >= 3){
+            g.drawImage(yoda,playerX,playerY,PLAYER_WIDTH,PLAYER_HEIGHT,null);
+        }
 
 
         // Displays game over screen if player loses
@@ -289,7 +303,7 @@ public class worldsHardestCats extends JFrame implements KeyListener {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new worldsHardestCats().setVisible(true);
+                new WorldsHardestCats().setVisible(true);
             }
         });
     }
