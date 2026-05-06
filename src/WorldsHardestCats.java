@@ -221,7 +221,14 @@ public class WorldsHardestCats extends JFrame implements KeyListener {
             Rectangle nextY = new Rectangle(playerX +6, movementY + 6, PLAYER_WIDTH- 13, PLAYER_HEIGHT - 14);
             if (!wallCollision(nextY) && movementY >= 0 && movementY <= HEIGHT - PLAYER_HEIGHT) playerY = movementY;
 
+            Rectangle playerHitbox = new Rectangle(playerX + 6, playerY + 6,PLAYER_WIDTH - 13, PLAYER_HEIGHT - 14);
             for (Enemy e : enemies) {
+                Rectangle enemyHitbox = new Rectangle(e.enemyX + 6, e.enemyY + 6,e.ENEMY_WIDTH - 13, e.ENEMY_HEIGHT - 14);
+                if (playerHitbox.intersects(enemyHitbox)){
+                    playerX = 97;
+                    playerY = 150;
+                    return;
+                }
                 if (e instanceof VerticalEnemy) {
                     ((VerticalEnemy) e).update(walls);
                 }
