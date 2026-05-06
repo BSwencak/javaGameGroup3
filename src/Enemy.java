@@ -71,26 +71,29 @@ class HorizontalEnemy extends Enemy {
     }
 }
 
-/** WIP
-class CircularEnemy extends Enemy {
 
-    public CircularEnemy(int enemyX, int enemyY, int ENEMY_HEIGHT, int ENEMY_WIDTH, int ENEMY_SPEED) {
-        super(enemyX, enemyY, ENEMY_HEIGHT, ENEMY_WIDTH, ENEMY_SPEED);
+class RotatingEnemy extends Enemy {
+
+    double angle; // current angle in radians
+    int radius; // distance from center
+    int centerX, centerY; // Center point to rotate around
+
+    // Constructor for rotating enemies
+    public RotatingEnemy(int centerX, int centerY, int radius, int sizeW, int sizeH, int speed, Image image, double startAngle) {
+        super(centerX, centerY, sizeH, sizeW, speed, image, 0); // sets all aspects of enemy
+
+        this.centerX = centerX;
+        this.centerY = centerY;
+        this.radius = radius;
+        this.angle = startAngle;
     }
 
+    // Update for Rotating enemies
     public void update(ArrayList<Rectangle> walls) {
-        int nextX = enemyX + (ENEMY_SPEED * direction);
-        Rectangle nextRect = new Rectangle(nextX, enemyY, ENEMY_WIDTH, ENEMY_HEIGHT);
+        angle += ENEMY_SPEED * 0.02; // rotation speed
 
-        // Check collision with walls
-        for (Rectangle wall : walls) {
-            if (nextRect.intersects(wall)) {
-                direction *= -1; // bounce, changes direction
-                return;          // don't move this frame
-            }
-        }
-        // No collision, apply movement
-        enemyX = nextX;
+        // Converts angle into X/Y position
+        enemyX = (int)(centerX + Math.cos(angle) * radius);
+        enemyY = (int)(centerY + Math.sin(angle) * radius);
     }
 }
- */
