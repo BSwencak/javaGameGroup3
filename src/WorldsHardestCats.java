@@ -286,7 +286,11 @@ public class WorldsHardestCats extends JFrame implements KeyListener {
             walls.add(new Rectangle(435, 325, 5, 100)); // bottom up right
             walls.add(new Rectangle(435, 320, 65, 5)); // finish box bottom connection
 
-            enemies.add(new VerticalEnemy(160,380,32,32,2, dog1));
+            enemies.add(new VerticalEnemy(160,399,32,32,4, dog2,-1));
+            enemies.add(new VerticalEnemy(235,235,32,32,3, dog3,1));
+            enemies.add(new VerticalEnemy(310,338,32,32,3, dog1,-1));
+            enemies.add(new VerticalEnemy(385,235,32,32,3, dog4,1));
+
 
         } else if (level == 2){
             // Start box

@@ -9,21 +9,22 @@ public abstract class Enemy {
 
     Image image;
 
-    public Enemy (int enemyX, int enemyY, int ENEMY_HEIGHT, int ENEMY_WIDTH, int ENEMY_SPEED, Image image){
+    public Enemy (int enemyX, int enemyY, int ENEMY_HEIGHT, int ENEMY_WIDTH, int ENEMY_SPEED, Image image, int direction){
         this.enemyX = enemyX;
         this.enemyY = enemyY;
         this.ENEMY_HEIGHT = ENEMY_HEIGHT;
         this.ENEMY_WIDTH = ENEMY_WIDTH;
         this.ENEMY_SPEED = ENEMY_SPEED;
         this.image = image;
+        this.direction = direction;
     }
 
 }
 
 class VerticalEnemy extends Enemy {
 
-    public VerticalEnemy(int enemyX, int enemyY, int ENEMY_HEIGHT, int ENEMY_WIDTH, int ENEMY_SPEED, Image image) {
-        super(enemyX, enemyY, ENEMY_HEIGHT, ENEMY_WIDTH, ENEMY_SPEED, image);
+    public VerticalEnemy(int enemyX, int enemyY, int ENEMY_HEIGHT, int ENEMY_WIDTH, int ENEMY_SPEED, Image image, int direction) {
+        super(enemyX, enemyY, ENEMY_HEIGHT, ENEMY_WIDTH, ENEMY_SPEED, image, direction);
     }
 
     public void update(ArrayList<Rectangle> walls) {
@@ -45,8 +46,8 @@ class VerticalEnemy extends Enemy {
 
 class HorizontalEnemy extends Enemy {
 
-    public HorizontalEnemy(int enemyX, int enemyY, int ENEMY_HEIGHT, int ENEMY_WIDTH, int ENEMY_SPEED, Image image) {
-        super(enemyX, enemyY, ENEMY_HEIGHT, ENEMY_WIDTH, ENEMY_SPEED, image);
+    public HorizontalEnemy(int enemyX, int enemyY, int ENEMY_HEIGHT, int ENEMY_WIDTH, int ENEMY_SPEED, Image image, int direction) {
+        super(enemyX, enemyY, ENEMY_HEIGHT, ENEMY_WIDTH, ENEMY_SPEED, image, direction);
     }
 
     public void update(ArrayList<Rectangle> walls) {
