@@ -32,6 +32,8 @@ public class WorldsHardestCats extends JFrame implements KeyListener {
 
     private JPanel gamePanel;
     private Timer timer;
+    private int totalFails;
+    private int levelFails;
     private int level = 1; // int for player level
     private boolean victory; // true/false for if final victory
     private ArrayList<Rectangle> walls = new ArrayList<>(); // list for rectangle walls
@@ -147,6 +149,7 @@ public class WorldsHardestCats extends JFrame implements KeyListener {
         g.setFont(new Font("Arial", Font.BOLD, 30));
         if (level <= 3){
             g.drawString("Level: " + level, 15, 40);
+            g.drawString("Fails: " + levelFails, 500, 40);
         }
         else {
             g.drawString("Level: 3", 15, 40);
@@ -190,7 +193,8 @@ public class WorldsHardestCats extends JFrame implements KeyListener {
         if (victory) {
             g.setColor(Color.WHITE);
             g.setFont(new Font("Arial", Font.BOLD, 24));
-            g.drawString("VICTORY!", WIDTH / 2 - 80, HEIGHT / 2);
+            g.drawString("VICTORY!", WIDTH / 2 - 80, 220);
+            g.drawString("Total Fails:  "+ totalFails, WIDTH / 2 - 80 , 260);
         }
 
     }
@@ -229,6 +233,7 @@ public class WorldsHardestCats extends JFrame implements KeyListener {
                 if (playerHitbox.intersects(enemyHitbox)){
                     playerX = 97;
                     playerY = 150;
+                    levelFails++;
                     return;
                 }
                 if (e instanceof VerticalEnemy) {
@@ -244,6 +249,8 @@ public class WorldsHardestCats extends JFrame implements KeyListener {
             Rectangle playerRect = new Rectangle(playerX, playerY, PLAYER_WIDTH, PLAYER_HEIGHT);
             Rectangle victoryRect = new Rectangle(500, 250, 75, 75);
             if (victoryRect.contains(playerRect) || cheatPressed){
+                totalFails=totalFails+levelFails;
+                levelFails=0;
                 level++; // increments level
 
 
