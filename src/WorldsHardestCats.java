@@ -93,7 +93,7 @@ public class WorldsHardestCats extends JFrame implements KeyListener {
 
 
         // Sets variable data
-        playerX = 100;
+        playerX = 97;
         playerY = 150;
         victory = false;
 
@@ -115,7 +115,7 @@ public class WorldsHardestCats extends JFrame implements KeyListener {
     // Function for resetting whole game
     private void resetGame(){
         // Resets player location
-        playerX = 100;
+        playerX = 97;
         playerY = 150;
 
         victory = false;
@@ -128,7 +128,7 @@ public class WorldsHardestCats extends JFrame implements KeyListener {
 
     // Function for resetting level
     private void resetLevel(){
-        playerX = 100;
+        playerX = 97;
         playerY = 150;
 
         victory = false;
@@ -166,21 +166,24 @@ public class WorldsHardestCats extends JFrame implements KeyListener {
         for (Rectangle wall : walls) g.fillRect(wall.x, wall.y, wall.width, wall.height);
 
 
+        //g.setColor(Color.RED);
+        for (Enemy e : enemies) {
+            // g.fillRect(e.enemyX, e.enemyY, e.ENEMY_WIDTH, e.ENEMY_HEIGHT);
+            g.drawImage(e.image,e.enemyX,e.enemyY,e.ENEMY_WIDTH,e.ENEMY_HEIGHT,null);
+        }
+
+
         // Sets player color
        // g.setColor(new Color(151, 2, 23, 255));
         //g.fillRect(playerX, playerY, PLAYER_WIDTH, PLAYER_HEIGHT);
         if (level == 1){
-            g.drawImage(alpha,playerX-3,playerY,PLAYER_WIDTH,PLAYER_HEIGHT,null);
+            g.drawImage(alpha,playerX,playerY,PLAYER_WIDTH,PLAYER_HEIGHT,null);
         }else if (level == 2){
-            g.drawImage(explorer,playerX-3,playerY,PLAYER_WIDTH,PLAYER_HEIGHT,null);
+            g.drawImage(explorer,playerX,playerY,PLAYER_WIDTH,PLAYER_HEIGHT,null);
         }else if (level >= 3){
-            g.drawImage(yoda,playerX-3,playerY,PLAYER_WIDTH,PLAYER_HEIGHT,null);
+            g.drawImage(yoda,playerX,playerY,PLAYER_WIDTH,PLAYER_HEIGHT,null);
         }
 
-        g.setColor(Color.RED);
-        for (Enemy e : enemies) {
-            g.fillRect(e.enemyX, e.enemyY, e.ENEMY_WIDTH, e.ENEMY_HEIGHT);
-        }
 
 
         // Displays game over screen if player loses
@@ -283,7 +286,7 @@ public class WorldsHardestCats extends JFrame implements KeyListener {
             walls.add(new Rectangle(435, 325, 5, 100)); // bottom up right
             walls.add(new Rectangle(435, 320, 65, 5)); // finish box bottom connection
 
-            enemies.add(new VerticalEnemy(160,380,32,32,2));
+            enemies.add(new VerticalEnemy(160,380,32,32,2, dog1));
 
         } else if (level == 2){
             // Start box
