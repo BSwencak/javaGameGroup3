@@ -1,4 +1,4 @@
-public class Enemy {
+public abstract class Enemy {
     int enemyX, enemyY;
     int ENEMY_WIDTH, ENEMY_HEIGHT;
     int ENEMY_SPEED;
@@ -11,4 +11,11 @@ public class Enemy {
         this.ENEMY_SPEED = ENEMY_SPEED;
     }
 
+}
+
+class VerticalEnemy extends Enemy{
+
+    public VerticalEnemy(int enemyX, int enemyY, int ENEMY_HEIGHT, int ENEMY_WIDTH, int ENEMY_SPEED) {
+        super(enemyX, enemyY, ENEMY_HEIGHT, ENEMY_WIDTH, ENEMY_SPEED);
+    }
 }
