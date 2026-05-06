@@ -121,6 +121,8 @@ public class WorldsHardestCats extends JFrame implements KeyListener {
         playerY = 150;
 
         victory = false;
+        levelFails = 0;
+        totalFails = 0;
         level = 1; // Resets all levels
         walls.clear();
         enemies.clear();
