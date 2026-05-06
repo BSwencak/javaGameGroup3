@@ -35,7 +35,7 @@ public class WorldsHardestCats extends JFrame implements KeyListener {
     private int level = 1; // int for player level
     private boolean victory; // true/false for if final victory
     private ArrayList<Rectangle> walls = new ArrayList<>(); // list for rectangle walls
-    private ArrayList<Rectangle> enemies = new ArrayList<>(); // list for rectangle enemies
+    private ArrayList<Enemy> enemies = new ArrayList<>(); // list for enemies
 
     private BufferedImage dog1;
     private BufferedImage dog2;
@@ -121,6 +121,7 @@ public class WorldsHardestCats extends JFrame implements KeyListener {
         victory = false;
         level = 1; // Resets all levels
         walls.clear();
+        enemies.clear();
         repaint();
     }
 
@@ -132,6 +133,7 @@ public class WorldsHardestCats extends JFrame implements KeyListener {
 
         victory = false;
         walls.clear();
+        enemies.clear();
         repaint();
     }
 
@@ -175,6 +177,11 @@ public class WorldsHardestCats extends JFrame implements KeyListener {
             g.drawImage(yoda,playerX-3,playerY,PLAYER_WIDTH,PLAYER_HEIGHT,null);
         }
 
+        g.setColor(Color.RED);
+        for (Enemy e : enemies) {
+            g.fillRect(e.enemyX, e.enemyY, e.ENEMY_WIDTH, e.ENEMY_HEIGHT);
+        }
+
 
         // Displays game over screen if player loses
         if (victory) {
@@ -187,49 +194,59 @@ public class WorldsHardestCats extends JFrame implements KeyListener {
 
     private void update(){
         if (!victory){
-                // Horizontal movement
-                int movementX = playerX;
-                if (leftPressed) movementX -= PLAYER_SPEED;
-                if (rightPressed) movementX += PLAYER_SPEED;
-                Rectangle nextX = new Rectangle(movementX + 6, playerY + 6,PLAYER_WIDTH - 13, PLAYER_HEIGHT - 14);
-                if (!wallCollision(nextX) && movementX >= 0 && movementX <= WIDTH - PLAYER_WIDTH) playerX = movementX;
 
-                // Vertical movement
-                int movementY = playerY;
-                if (upPressed) movementY -= PLAYER_SPEED;
-                if (downPressed) movementY += PLAYER_SPEED;
-                Rectangle nextY = new Rectangle(playerX +6, movementY + 6, PLAYER_WIDTH- 13, PLAYER_HEIGHT - 14);
-                if (!wallCollision(nextY) && movementY >= 0 && movementY <= HEIGHT - PLAYER_HEIGHT) playerY = movementY;
+            // runs loadLevel to add walls to level
+            if (level == 1 && walls.isEmpty()){
+                loadLevel();
+            } else if (level == 2 && walls.isEmpty()){
+                loadLevel();
+            } else if (level >= 3 && walls.isEmpty()){
+                loadLevel();
+            }
 
+            // Horizontal movement
+            int movementX = playerX;
+            if (leftPressed) movementX -= PLAYER_SPEED;
+            if (rightPressed) movementX += PLAYER_SPEED;
+            Rectangle nextX = new Rectangle(movementX + 6, playerY + 6,PLAYER_WIDTH - 13, PLAYER_HEIGHT - 14);
+            if (!wallCollision(nextX) && movementX >= 0 && movementX <= WIDTH - PLAYER_WIDTH) playerX = movementX;
 
-                // runs loadLevel to add walls to level
-                if (level == 1 && walls.isEmpty()){
-                    loadLevel();
-                } else if (level == 2 && walls.isEmpty()){
-                    loadLevel();
-                } else if (level >= 3 && walls.isEmpty()){
-                    loadLevel();
+            // Vertical movement
+            int movementY = playerY;
+            if (upPressed) movementY -= PLAYER_SPEED;
+            if (downPressed) movementY += PLAYER_SPEED;
+            Rectangle nextY = new Rectangle(playerX +6, movementY + 6, PLAYER_WIDTH- 13, PLAYER_HEIGHT - 14);
+            if (!wallCollision(nextY) && movementY >= 0 && movementY <= HEIGHT - PLAYER_HEIGHT) playerY = movementY;
+
+            for (Enemy e : enemies) {
+                if (e instanceof VerticalEnemy) {
+                    ((VerticalEnemy) e).update(walls);
                 }
-
-
-                // Checks if player is in victory space
-                Rectangle playerRect = new Rectangle(playerX, playerY, PLAYER_WIDTH, PLAYER_HEIGHT);
-                Rectangle victoryRect = new Rectangle(500, 250, 75, 75);
-                if (victoryRect.contains(playerRect) || cheatPressed){
-                    level++; // increments level
-
-
-                    cheatPressed = false;
-
-                    // victory if player beats level 3
-                    if (level == 4) {
-                        victory = true;
-                    } else {
-                        playerX = 100; // resets player position
-                        playerY = 150;
-                        walls.clear();
-                    }
+                if (e instanceof HorizontalEnemy) {
+                    ((HorizontalEnemy) e).update(walls);
                 }
+            }
+
+
+            // Checks if player is in victory space
+            Rectangle playerRect = new Rectangle(playerX, playerY, PLAYER_WIDTH, PLAYER_HEIGHT);
+            Rectangle victoryRect = new Rectangle(500, 250, 75, 75);
+            if (victoryRect.contains(playerRect) || cheatPressed){
+                level++; // increments level
+
+
+                cheatPressed = false;
+
+                // victory if player beats level 3
+                if (level == 4) {
+                    victory = true;
+                } else {
+                    playerX = 100; // resets player position
+                    playerY = 150;
+                    walls.clear();
+                    enemies.clear();
+                }
+            }
         }
     }
 
@@ -238,6 +255,7 @@ public class WorldsHardestCats extends JFrame implements KeyListener {
 
     private void loadLevel(){
         walls.clear();
+        enemies.clear();
         // adds wall rectangles to list "walls"
         if (level == 1){
             // Start box
@@ -265,9 +283,7 @@ public class WorldsHardestCats extends JFrame implements KeyListener {
             walls.add(new Rectangle(435, 325, 5, 100)); // bottom up right
             walls.add(new Rectangle(435, 320, 65, 5)); // finish box bottom connection
 
-            VerticalEnemy enemy1 = new VerticalEnemy(30,30,32,32,2);
-
-
+            enemies.add(new VerticalEnemy(160,380,32,32,2));
 
         } else if (level == 2){
             // Start box
