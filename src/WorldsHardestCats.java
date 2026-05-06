@@ -193,8 +193,11 @@ public class WorldsHardestCats extends JFrame implements KeyListener {
         if (victory) {
             g.setColor(Color.WHITE);
             g.setFont(new Font("Arial", Font.BOLD, 24));
-            g.drawString("VICTORY!", WIDTH / 2 - 80, 220);
-            g.drawString("Total Fails:  "+ totalFails, WIDTH / 2 - 80 , 260);
+            FontMetrics metrics = g.getFontMetrics(g.getFont());
+            int x = (WIDTH - metrics.stringWidth("VICTORY!"))/2;
+            g.drawString("VICTORY!", x, 220);
+            x = (WIDTH - metrics.stringWidth("Total Fails: "+totalFails))/2;
+            g.drawString("Total Fails:  "+ totalFails, x , 260);
         }
 
     }
