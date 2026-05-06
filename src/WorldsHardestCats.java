@@ -221,9 +221,11 @@ public class WorldsHardestCats extends JFrame implements KeyListener {
             Rectangle nextY = new Rectangle(playerX +6, movementY + 6, PLAYER_WIDTH- 13, PLAYER_HEIGHT - 14);
             if (!wallCollision(nextY) && movementY >= 0 && movementY <= HEIGHT - PLAYER_HEIGHT) playerY = movementY;
 
+            // Creates offset player hitbox to compensate for image difference
             Rectangle playerHitbox = new Rectangle(playerX + 6, playerY + 6,PLAYER_WIDTH - 13, PLAYER_HEIGHT - 14);
             for (Enemy e : enemies) {
                 Rectangle enemyHitbox = new Rectangle(e.enemyX + 6, e.enemyY + 6,e.ENEMY_WIDTH - 13, e.ENEMY_HEIGHT - 14);
+                // Resets player in level if hit enemy
                 if (playerHitbox.intersects(enemyHitbox)){
                     playerX = 97;
                     playerY = 150;
@@ -293,6 +295,7 @@ public class WorldsHardestCats extends JFrame implements KeyListener {
             walls.add(new Rectangle(435, 325, 5, 100)); // bottom up right
             walls.add(new Rectangle(435, 320, 65, 5)); // finish box bottom connection
 
+            // Enemy Spawns
             enemies.add(new VerticalEnemy(160,399,32,32,4, dog2,-1));
             enemies.add(new VerticalEnemy(235,235,32,32,3, dog3,1));
             enemies.add(new VerticalEnemy(310,338,32,32,3, dog1,-1));
