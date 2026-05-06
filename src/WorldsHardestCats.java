@@ -237,6 +237,10 @@ public class WorldsHardestCats extends JFrame implements KeyListener {
                 if (e instanceof HorizontalEnemy) {
                     ((HorizontalEnemy) e).update(walls);
                 }
+                if (e instanceof RotatingEnemy) {
+                    ((RotatingEnemy) e).update(walls);
+                }
+
             }
 
 
@@ -322,6 +326,21 @@ public class WorldsHardestCats extends JFrame implements KeyListener {
             walls.add(new Rectangle(500, 250, 75, 5)); // top
             walls.add(new Rectangle(500, 320, 75, 5)); // bottom
             walls.add(new Rectangle(570, 250, 5, 75)); // right
+
+            // center point of rotation
+            int centerX = 300;
+            int centerY = 200;
+            int radius = 80; // radius of rotation circle
+            int size = 32; // enemy size
+            int speed = 2;
+
+            Image[] dogs = {dog2,dog3,dog1,dog4}; // array of dogs to pick from for the circle
+
+            for (int i = 0; i < 6; i++) { // loops to make 6 enemies
+                double angle = (Math.PI * 2 / 6) * i; // evenly spaces enemies
+                Image dog = dogs[i % dogs.length]; // cycles through the dogs 1 by 1
+                enemies.add(new RotatingEnemy(centerX, centerY, radius, size, size, speed, dog, angle));
+            }
         }
 
     }
