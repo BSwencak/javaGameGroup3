@@ -163,6 +163,7 @@ public class WorldsHardestCats extends JFrame implements KeyListener {
         g.setColor(Color.BLACK);
         for (Rectangle wall : walls) g.fillRect(wall.x, wall.y, wall.width, wall.height);
 
+
         // Sets player color
        // g.setColor(new Color(151, 2, 23, 255));
         //g.fillRect(playerX, playerY, PLAYER_WIDTH, PLAYER_HEIGHT);
@@ -263,6 +264,10 @@ public class WorldsHardestCats extends JFrame implements KeyListener {
             walls.add(new Rectangle(75, 420, 360, 5)); // bottom
             walls.add(new Rectangle(435, 325, 5, 100)); // bottom up right
             walls.add(new Rectangle(435, 320, 65, 5)); // finish box bottom connection
+
+            Enemy enemy1 = new Enemy(30,30,30,30,30);
+
+
 
         } else if (level == 2){
             // Start box
