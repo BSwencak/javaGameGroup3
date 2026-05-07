@@ -160,7 +160,13 @@ public class WorldsHardestCats extends JFrame implements KeyListener {
 
         // Sets victory location
         g.setColor(new Color(70, 200, 96, 255));
-        g.fillRect(500, 250, 75, 75);
+
+
+        if (level == 2) {
+            g.fillRect(500, 285, 75, 75); // level 2 green box
+        } else {
+            g.fillRect(500, 250, 75, 75); // level 1 and 3 green box
+        }
 
         // Sets starting location
         g.setColor(new Color(111, 70, 200, 255));
@@ -256,7 +262,14 @@ public class WorldsHardestCats extends JFrame implements KeyListener {
 
             // Checks if player is in victory space
             Rectangle playerRect = new Rectangle(playerX, playerY, PLAYER_WIDTH, PLAYER_HEIGHT);
-            Rectangle victoryRect = new Rectangle(500, 250, 75, 75);
+            Rectangle victoryRect;
+
+
+            if (level == 2) {
+                victoryRect = new Rectangle(500, 285, 75, 75); // level 2 green box position
+            } else {
+                victoryRect = new Rectangle(500, 250, 75, 75); // level 1 and 3 green box position
+            }
             if (victoryRect.contains(playerRect) || cheatPressed){
                 totalFails=totalFails+levelFails;
                 levelFails=0;
@@ -281,11 +294,11 @@ public class WorldsHardestCats extends JFrame implements KeyListener {
 
 
 
-    private void loadLevel(){
+    private void loadLevel() {
         walls.clear();
         enemies.clear();
         // adds wall rectangles to list "walls"
-        if (level == 1){
+        if (level == 1) {
             // Start box
             walls.add(new Rectangle(75, 125, 75, 5)); // top
             walls.add(new Rectangle(75, 125, 5, 75)); // left
@@ -312,22 +325,47 @@ public class WorldsHardestCats extends JFrame implements KeyListener {
             walls.add(new Rectangle(435, 320, 65, 5)); // finish box bottom connection
 
             // Enemy Spawns
-            enemies.add(new VerticalEnemy(160,399,32,32,4, dog2,-1));
-            enemies.add(new VerticalEnemy(235,235,32,32,3, dog3,1));
-            enemies.add(new VerticalEnemy(310,338,32,32,3, dog1,-1));
-            enemies.add(new VerticalEnemy(385,235,32,32,3, dog4,1));
+            enemies.add(new VerticalEnemy(160, 399, 32, 32, 4, dog2, -1));
+            enemies.add(new VerticalEnemy(235, 235, 32, 32, 3, dog3, 1));
+            enemies.add(new VerticalEnemy(310, 338, 32, 32, 3, dog1, -1));
+            enemies.add(new VerticalEnemy(385, 235, 32, 32, 3, dog4, 1));
 
 
-        } else if (level == 2){
+        } else if (level == 2) {
             // Start box
             walls.add(new Rectangle(75, 125, 75, 5)); // top
-            walls.add(new Rectangle(75, 195, 75, 5)); // bottom
             walls.add(new Rectangle(75, 125, 5, 75)); // left
+            walls.add(new Rectangle(75, 195, 75, 5)); // bottom
 
             // Finish box
-            walls.add(new Rectangle(500, 320, 75, 5)); // bottom
-            walls.add(new Rectangle(500, 250, 5, 75)); // left
-            walls.add(new Rectangle(570, 250, 5, 75)); // right
+            walls.add(new Rectangle(500, 285, 75, 5)); // top
+            walls.add(new Rectangle(500, 355, 75, 5)); // bottom
+            walls.add(new Rectangle(570, 285, 5, 75)); // right
+
+            // Outer room walls
+            walls.add(new Rectangle(145, 125, 360, 5)); // top
+            walls.add(new Rectangle(145, 355, 360, 5)); // bottom
+            walls.add(new Rectangle(145, 200, 5, 160)); // left
+            walls.add(new Rectangle(500, 125, 5, 200)); // right
+
+            // Lane dividers with gaps for player to pass through
+            walls.add(new Rectangle(145, 210, 150, 5)); // divider 1 left part
+            walls.add(new Rectangle(350, 210, 155, 5)); // divider 1 right part - gap in middle
+            walls.add(new Rectangle(145, 285, 200, 5)); // divider 2 left part
+            walls.add(new Rectangle(400, 285, 105, 5)); // divider 2 right part - gap on right
+
+
+            // Enemy Spawns
+            enemies.add(new HorizontalEnemy(160, 185, 32, 32, 5, dog1,  1));  // lane 1 right
+            enemies.add(new HorizontalEnemy(400, 185, 32, 32, 5, dog2, -1));  // lane 1 left
+            enemies.add(new HorizontalEnemy(160, 240, 32, 32, 4, dog3,  1));  // lane 2 right
+            enemies.add(new HorizontalEnemy(380, 240, 32, 32, 4, dog4, -1));  // lane 2 left
+            enemies.add(new HorizontalEnemy(160, 300, 32, 32, 6, dog1,  1));  // lane 3 right
+            enemies.add(new HorizontalEnemy(400, 300, 32, 32, 6, dog2, -1));  // lane 3 left
+
+
+
+
         } else if (level >= 3){
             // Start box
             walls.add(new Rectangle(75, 125, 75, 5)); // top
