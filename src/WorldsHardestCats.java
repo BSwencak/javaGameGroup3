@@ -157,9 +157,6 @@ public class WorldsHardestCats extends JFrame implements KeyListener {
         if(!victory){
             playerX = 97;
             playerY = 150;
-            walls.clear();
-            enemies.clear();
-            repaint();
         }
     }
 
