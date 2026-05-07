@@ -1,5 +1,6 @@
 // Imported Classes Needed
 import javax.imageio.ImageIO;
+import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -7,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -30,12 +32,24 @@ public class WorldsHardestCats extends JFrame implements KeyListener {
 
     private int playerX, playerY; // Player coords
 
+    // Sound instantiate
+    private String sndWin = "/audio/sndWin.wav";
+    private String sndBark = "/audio/sndBark.wav";
+    private String sndMeow = "/audio/sndMeow.wav";
+    private String sndBlipBad = "/audio/sndBlipBad.wav";
+    private String sndBlipGood = "/audio/sndBlipGood.wav";
+
+
     private JPanel gamePanel;
     private Timer timer;
     private int totalFails;
     private int levelFails;
+    private int leastFails;
+    private Clip clip;
     private int level = 1; // int for player level
     private boolean victory; // true/false for if final victory
+    private boolean touchingWall = false;
+    private boolean touchWall = false;
     private ArrayList<Rectangle> walls = new ArrayList<>(); // list for rectangle walls
     private ArrayList<Enemy> enemies = new ArrayList<>(); // list for enemies
 
@@ -63,10 +77,16 @@ public class WorldsHardestCats extends JFrame implements KeyListener {
             explorer = ImageIO.read(Objects.requireNonNull(getClass().getResource("/images/explorer.png")));
             yoda = ImageIO.read(Objects.requireNonNull(getClass().getResource("/images/yoda.png")));
 
-            //AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("laser.wav").getAbsoluteFile());
-            //clip = AudioSystem.getClip();
-            //clip.open(audioInputStream);
+            AudioInputStream gameMusic = AudioSystem.getAudioInputStream(Objects.requireNonNull(getClass().getResource("/audio/musCatSong.wav")));
+
+            clip = AudioSystem.getClip();
+            clip.open(gameMusic);
+            clip.loop(Clip.LOOP_CONTINUOUSLY);
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (UnsupportedAudioFileException e) {
+            e.printStackTrace();
+        } catch (LineUnavailableException e) {
             e.printStackTrace();
         }
 
@@ -119,6 +139,8 @@ public class WorldsHardestCats extends JFrame implements KeyListener {
         // Resets player location
         playerX = 97;
         playerY = 150;
+
+        clip.loop(Clip.LOOP_CONTINUOUSLY);
 
         victory = false;
         levelFails = 0;
@@ -224,16 +246,20 @@ public class WorldsHardestCats extends JFrame implements KeyListener {
 
         // Displays game over screen if player loses
         if (victory) {
+            clip.stop();
+            playSound(sndWin);
             //Transparent rectangle
             g.setColor(new Color(100, 100, 100, 160)); // 160 is for transparency and higher number means less see-through
-            g.fillRect(0, 180, WIDTH, 100);
+            g.fillRect(0, 160, WIDTH, 145);
             g.setColor(Color.WHITE);
             g.setFont(new Font("Arial", Font.BOLD, 24));
             FontMetrics metrics = g.getFontMetrics(g.getFont());
             int x = (WIDTH - metrics.stringWidth("VICTORY!"))/2;
-            g.drawString("VICTORY!", x, 220);
+            g.drawString("VICTORY!", x, 200);
             x = (WIDTH - metrics.stringWidth("Total Fails: "+totalFails))/2;
-            g.drawString("Total Fails:  "+ totalFails, x , 260);
+            g.drawString("Total Fails: "+ totalFails, x , 240);
+            x = (WIDTH - metrics.stringWidth("Least Fails: "+leastFails))/2;
+            g.drawString("Least Fails: "+ leastFails, x , 280);
         }
 
     }
@@ -250,19 +276,30 @@ public class WorldsHardestCats extends JFrame implements KeyListener {
                 loadLevel();
             }
 
+            touchWall = false;
+
             // Horizontal movement
             int movementX = playerX;
             if (leftPressed) movementX -= PLAYER_SPEED;
             if (rightPressed) movementX += PLAYER_SPEED;
             Rectangle nextX = new Rectangle(movementX + 6, playerY + 6,PLAYER_WIDTH - 13, PLAYER_HEIGHT - 14);
-            if (!wallCollision(nextX) && movementX >= 0 && movementX <= WIDTH - PLAYER_WIDTH) playerX = movementX;
+            if (!wallCollision(nextX) && movementX >= 0 && movementX <= WIDTH - PLAYER_WIDTH) {
+                playerX = movementX;
+            } else if (movementX != playerX) {
+                touchWall = true;
+            }
 
             // Vertical movement
             int movementY = playerY;
             if (upPressed) movementY -= PLAYER_SPEED;
             if (downPressed) movementY += PLAYER_SPEED;
             Rectangle nextY = new Rectangle(playerX +6, movementY + 6, PLAYER_WIDTH- 13, PLAYER_HEIGHT - 14);
-            if (!wallCollision(nextY) && movementY >= 0 && movementY <= HEIGHT - PLAYER_HEIGHT) playerY = movementY;
+            if (!wallCollision(nextY) && movementY >= 0 && movementY <= HEIGHT - PLAYER_HEIGHT) {
+                playerY = movementY;
+            } else if (movementY != playerY) {
+                touchWall = true;
+            }
+
 
             // Creates offset player hitbox to compensate for image difference
             Rectangle playerHitbox = new Rectangle(playerX + 6, playerY + 6,PLAYER_WIDTH - 13, PLAYER_HEIGHT - 14);
@@ -270,6 +307,7 @@ public class WorldsHardestCats extends JFrame implements KeyListener {
                 Rectangle enemyHitbox = new Rectangle(e.enemyX + 6, e.enemyY + 6,e.ENEMY_WIDTH - 13, e.ENEMY_HEIGHT - 14);
                 // Resets player in level if hit enemy
                 if (playerHitbox.intersects(enemyHitbox)){
+                    playSound(sndMeow);
                     playerX = 97;
                     playerY = 150;
                     levelFails++;
@@ -287,6 +325,14 @@ public class WorldsHardestCats extends JFrame implements KeyListener {
 
             }
 
+            if (touchWall && !touchingWall) {
+                playSound(sndBlipBad);
+            }
+            touchingWall = touchWall;
+
+            // Random barking
+            if (Math.random() < 0.01) playSound(sndBark);
+
 
             // Checks if player is in victory space
             Rectangle playerRect = new Rectangle(playerX, playerY, PLAYER_WIDTH, PLAYER_HEIGHT);
@@ -298,9 +344,11 @@ public class WorldsHardestCats extends JFrame implements KeyListener {
             } else {
                 victoryRect = new Rectangle(500, 250, 75, 75); // level 1 and 3 green box position
             }
-            if (victoryRect.contains(playerRect) || cheatPressed){
-                totalFails=totalFails+levelFails;
-                levelFails=0;
+            if (victoryRect.contains(playerRect) || cheatPressed) {
+                totalFails = totalFails + levelFails;
+                if (totalFails < leastFails || leastFails == 0) leastFails = totalFails;
+                levelFails = 0;
+                playSound(sndBlipGood);
                 level++; // increments level
 
 
@@ -310,7 +358,7 @@ public class WorldsHardestCats extends JFrame implements KeyListener {
                 if (level == 4) {
                     victory = true;
                 } else {
-                    playerX = 100; // resets player position
+                    playerX = 97; // resets player position
                     playerY = 150;
                     walls.clear();
                     enemies.clear();
@@ -320,6 +368,18 @@ public class WorldsHardestCats extends JFrame implements KeyListener {
     }
 
 
+    private void playSound(String path) {
+        try {
+            AudioInputStream stream = AudioSystem.getAudioInputStream(
+                    Objects.requireNonNull(getClass().getResource(path))
+            );
+            Clip c = AudioSystem.getClip();
+            c.open(stream);
+            c.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 
     private void loadLevel() {
