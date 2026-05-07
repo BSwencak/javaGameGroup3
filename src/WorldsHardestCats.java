@@ -327,10 +327,31 @@ public class WorldsHardestCats extends JFrame implements KeyListener {
             walls.add(new Rectangle(500, 320, 75, 5)); // bottom
             walls.add(new Rectangle(570, 250, 5, 75)); // right
 
+            // Outline for Level 3
+            // Make it so that rotating dogs fit to walls
+
+            // Top outline path that goes from start area to middle
+            walls.add(new Rectangle(150, 125, 75, 5)); // top path that comes out of start area
+            walls.add(new Rectangle(225, 110, 5, 20)); // wall goes up
+            walls.add(new Rectangle(225, 110, 115, 5)); // flat part on top of wall
+            walls.add(new Rectangle(340, 110, 5, 40)); // wall goes down
+            walls.add(new Rectangle(340, 145, 20, 5)); // middle area towards top
+            walls.add(new Rectangle(360, 145, 5, 110)); // right drop towards finish area
+            walls.add(new Rectangle(365, 250, 135, 5)); // connects to finish top
+
+            // Bottom outline path from start area to middle
+            walls.add(new Rectangle(150, 195, 55, 5)); // bottom path that comes out of start area
+            walls.add(new Rectangle(205, 195, 5, 140)); // left drop downward
+            walls.add(new Rectangle(205, 335, 150, 5)); // flat part on bottom of wall
+            walls.add(new Rectangle(355, 290, 5, 50)); // wall goes up
+            walls.add(new Rectangle(355, 290, 45, 5)); // middle area towards bottom
+            walls.add(new Rectangle(395, 290, 5, 35)); // right drop towards finish area
+            walls.add(new Rectangle(395, 320, 105, 5)); // connects to finish bottom
+
             // center point of rotation
-            int centerX = 300;
-            int centerY = 200;
-            int radius = 80; // radius of rotation circle
+            int centerX = 270;
+            int centerY = 215;
+            int radius = 55; // radius of rotation circle
             int size = 32; // enemy size
             int speed = 2;
 
