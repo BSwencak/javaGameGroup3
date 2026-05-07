@@ -226,7 +226,7 @@ public class WorldsHardestCats extends JFrame implements KeyListener {
         if (victory) {
             //Transparent rectangle
             g.setColor(new Color(100, 100, 100, 160)); // 160 is for transparency and higher number means less see-through
-            g.fillRect(0, 190, WIDTH, 100);
+            g.fillRect(0, 180, WIDTH, 100);
             g.setColor(Color.WHITE);
             g.setFont(new Font("Arial", Font.BOLD, 24));
             FontMetrics metrics = g.getFontMetrics(g.getFont());
