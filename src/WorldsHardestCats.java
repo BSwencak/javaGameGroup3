@@ -346,7 +346,7 @@ public class WorldsHardestCats extends JFrame implements KeyListener {
             walls.add(new Rectangle(355, 290, 5, 50)); // wall goes up
             walls.add(new Rectangle(355, 290, 45, 5)); // middle area towards bottom
             walls.add(new Rectangle(395, 290, 5, 35)); // right drop towards finish area
-            walls.add(new Rectangle(395, 320, 105, 5)); // connects to finish bottom
+            alls.add(new Rectangle(395, 320, 105, 5)); // connects to finish bottom
 
             // center point of rotation
             int centerX = 270;
