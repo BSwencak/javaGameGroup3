@@ -244,6 +244,7 @@ public class WorldsHardestCats extends JFrame implements KeyListener {
         // Displays game over screen if player loses
         if (victory) {
             clip.stop();
+            if (totalFails < leastFails || leastFails == 0) leastFails = totalFails;
             playSound(sndWin);
             //Transparent rectangle
             g.setColor(new Color(100, 100, 100, 160)); // 160 is for transparency and higher number means less see-through
@@ -343,7 +344,6 @@ public class WorldsHardestCats extends JFrame implements KeyListener {
             }
             if (victoryRect.contains(playerRect) || cheatPressed) {
                 totalFails = totalFails + levelFails;
-                if (totalFails < leastFails || leastFails == 0) leastFails = totalFails;
                 levelFails = 0;
                 playSound(sndBlipGood);
                 level++; // increments level
