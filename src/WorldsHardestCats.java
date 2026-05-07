@@ -143,8 +143,33 @@ public class WorldsHardestCats extends JFrame implements KeyListener {
 
     private void draw(Graphics g){
         // Sets background
-        g.setColor(new Color(28, 161, 218));
+        // Makes the whole window background white
+        g.setColor(Color.WHITE);
         g.fillRect(0, 0, WIDTH, HEIGHT);
+
+        // Fill in color inside the maze
+        g.setColor(new Color(28, 161, 218));
+
+        if (level == 1) {
+            // Level 1 maze area
+            // Uses a single polygon to match up with maze area
+            int[] xPoints = {75, 150, 150, 205, 205, 450, 450, 575, 575, 440, 440, 75}; // x-points are all x-coordinates of the shape
+            int[] yPoints = {125, 125, 295, 295, 175, 175, 250, 250, 325, 325, 425, 425}; // y-points are all y-coordinates of the shape
+            // Fills polygon using the points
+            g.fillPolygon(xPoints, yPoints, xPoints.length);
+        }
+        else if (level == 2) {
+            // Level 2 maze area
+            int[] xPoints = {75, 505, 505, 575, 575, 145, 145, 75};
+            int[] yPoints = {125, 125, 285, 285, 360, 360, 200, 200};
+            g.fillPolygon(xPoints, yPoints, xPoints.length);
+        }
+        else if (level >= 3) {
+            // Level 3 maze area
+            int[] xPoints = {75, 225, 225, 345, 345, 360, 360, 500, 500, 575, 575, 500, 500, 400, 400, 355, 355, 205, 205, 75};
+            int[] yPoints = {125, 125, 110, 110, 145, 145, 255, 255, 250, 250, 325, 325, 320, 320, 290, 290, 340, 340, 200, 200};
+            g.fillPolygon(xPoints, yPoints, xPoints.length);
+        }
 
         // Displays level
         g.setColor(Color.BLACK);
@@ -199,6 +224,9 @@ public class WorldsHardestCats extends JFrame implements KeyListener {
 
         // Displays game over screen if player loses
         if (victory) {
+            //Transparent rectangle
+            g.setColor(new Color(100, 100, 100, 160)); // 160 is for transparency and higher number means less see-through
+            g.fillRect(0, 180, WIDTH, 100);
             g.setColor(Color.WHITE);
             g.setFont(new Font("Arial", Font.BOLD, 24));
             FontMetrics metrics = g.getFontMetrics(g.getFont());
