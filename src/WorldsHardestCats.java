@@ -154,13 +154,13 @@ public class WorldsHardestCats extends JFrame implements KeyListener {
 
     // Function for resetting level
     private void resetLevel(){
-        playerX = 97;
-        playerY = 150;
-
-        victory = false;
-        walls.clear();
-        enemies.clear();
-        repaint();
+        if(!victory){
+            playerX = 97;
+            playerY = 150;
+            walls.clear();
+            enemies.clear();
+            repaint();
+        }
     }
 
     private void draw(Graphics g){
@@ -352,12 +352,11 @@ public class WorldsHardestCats extends JFrame implements KeyListener {
                 level++; // increments level
 
 
-                cheatPressed = false;
-
                 // victory if player beats level 3
                 if (level == 4) {
                     victory = true;
                 } else {
+                    cheatPressed = false;
                     playerX = 97; // resets player position
                     playerY = 150;
                     walls.clear();
