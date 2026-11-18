@@ -1,11 +1,16 @@
-CONTROLS:
-  Arrow Up/W: Up, 
-  Arrow Down/S: Down, 
-  Arrow Left/A: Left, 
-  Arrow Right/D: Right, 
+# Worlds Hardest Cats
+This game is a simple, fun, ripoff version of worlds hardest game. Made for a class project with our professor's cats as the player instead!
 
-  Holding 2 keys at once like up and left will move player diagonally.
-  
-  Escape Key: Resets player on level, 
-  Backspace: Resets Game, 
-  Alt Key: Skips level (dev tool)
+## How To Run
+In the /src folder run 'WorldsHardestCats.java' to play the game!
+
+## CONTROLS
+**Arrow Up/W:** *Up*
+<br>**Arrow Down/S:** *Down*
+<br>**Arrow Left/A:** *Left*
+<br>**Arrow Right/D:** *Right*
+> *Holding 2 keys at once like up and left will move player diagonally.*
+
+**Escape Key:** *Resets player on level*
+<br>**Backspace:** *Resets Game*
+<br>**Alt Key:** *Skips level (dev tool)*
